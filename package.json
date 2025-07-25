@@ -1,0 +1,23 @@
+{
+  "name": "mi_primer_electron",
+  "version": "1.0.0",
+  "description": "Mi primera aplicación usando Electron.js",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sebaxsus/Mi_Primer_Electron.git"
+  },
+  "author": "Sebaxsus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sebaxsus/Mi_Primer_Electron/issues"
+  },
+  "homepage": "https://github.com/Sebaxsus/Mi_Primer_Electron#readme",
+  "devDependencies": {
+    "electron": "^37.2.4"
+  }
+}

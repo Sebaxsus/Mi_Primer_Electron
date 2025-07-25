@@ -1,0 +1,93 @@
+* {
+    background-color: light-dark(beige, black);
+    color: light-dark(black, beige);
+}
+
+body {
+    display: flex;
+
+    height: 100%;
+    width: auto;
+
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    display: grid;
+
+    grid-template-areas: 
+        "Title"
+        "Table"
+        "Resume"
+    ;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+}
+
+h1 {
+    grid-area: Title;
+}
+
+#resume {
+    grid-area: Resume;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+#tabla {
+    display: block;
+    border: 1px solid currentColor;
+    text-indent: 20px;
+    text-overflow: clip;
+
+    cursor: default;
+
+    width: fit-content;
+
+    grid-area: Table;
+}
+
+#tabla thead {
+    display: flex;
+
+    border-bottom: 1px solid currentColor;
+    top: 0;
+}
+
+#tabla thead tr {
+    display: flex;
+    justify-content: space-between;
+
+    width: -webkit-fill-available;
+    margin: 5px;
+}
+
+#tabla tbody {
+    display: flex;
+    overflow-y: auto;
+    text-overflow: inherit;
+    scroll-behavior: smooth;
+
+    width: fit-content;
+}
+
+#tabla tfoot {
+    display: block;
+    border-top: 1px solid currentColor;
+
+    width: fit-content;
+}
+
+h1 {
+    text-align: center;
+}

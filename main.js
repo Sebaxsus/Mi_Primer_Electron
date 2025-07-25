@@ -1,0 +1,33 @@
+// Convenciones de Capitalizacion de Modulos
+// Las convenciones tipicas de JavaScript
+// Los Modulos con **PascalCase** son Constructores de Clase Instanciables (E.J BrowserWindow, Tray, Notification)
+// Los Modulos cob **camelCase** son modulos **NO INSTANCIABLES** (E.J app, ipcRender, webContets)
+// [Mas Info](https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app#importing-modules)
+const { app, BrowserWindow } = require('electron')
+
+// Se puede importar usando los tipos exactos de modulos
+// Para manejar mejor los tipos cuando se usa TypeScript
+// Usando su alias (Ej require('electron/main') )
+// [Mas Info](https://www.electronjs.org/docs/latest/tutorial/process-model#process-specific-module-aliases-typescript)
+
+const createWindow = () => {
+    
+    const window = new BrowserWindow({
+        with: 800,
+        height: 600
+    })
+
+    window.loadFile("index.html")
+
+}
+
+// Como electron usa la arquitectura asyncrona manejada por eventos de
+// node, Cuando las promesas son resueltas el crea la ventana
+// [Mas info](https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app#calling-your-function-when-the-app-is-ready)
+app.whenReady().then(() => {
+    createWindow()
+})
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
+})
