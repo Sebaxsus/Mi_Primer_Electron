@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
     <title>Mi Primer Electron</title>
     <link rel="stylesheet" type="text/css" href="./global.css" />
 </head>
@@ -44,4 +52,13 @@
         </article>
     </main>
 </body>
+<footer>
+    <h2>Versiones:</h2>
+    <ul>
+        <li id="nodeVersion"></li>
+        <li id="chromeVersion"></li>
+        <li id="electronVersion"></li>
+    </ul>
+</footer>
+<script src="./renderer.js"></script>
 </html>

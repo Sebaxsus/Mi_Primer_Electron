@@ -4,6 +4,7 @@
 // Los Modulos cob **camelCase** son modulos **NO INSTANCIABLES** (E.J app, ipcRender, webContets)
 // [Mas Info](https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app#importing-modules)
 const { app, BrowserWindow } = require('electron')
+const path = require('node:path')
 
 // Se puede importar usando los tipos exactos de modulos
 // Para manejar mejor los tipos cuando se usa TypeScript
@@ -14,7 +15,10 @@ const createWindow = () => {
     
     const window = new BrowserWindow({
         with: 800,
-        height: 600
+        height: 600,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
     })
 
     window.loadFile("index.html")
@@ -26,6 +30,10 @@ const createWindow = () => {
 // [Mas info](https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app#calling-your-function-when-the-app-is-ready)
 app.whenReady().then(() => {
     createWindow()
+
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
 })
 
 app.on('window-all-closed', () => {
