@@ -1,7 +1,19 @@
-* {
+:root {
     color-scheme: light dark;
-    background-color: light-dark(beige, black);
-    color: light-dark(black, beige);
+    /* background-color: light-dark(beige, black);
+    color: light-dark(black, beige); */
+}
+
+@media (prefers-color-scheme: dark) {
+  body { background: #333; color: white; }
+}
+
+@media (prefers-color-scheme: light) {
+  body { background: #ddd; color: black; }
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
@@ -107,4 +119,53 @@ footer {
 
 h1 {
     text-align: center;
+}
+
+/* UI de CodePen */
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-label {
+  background-color: #292929;
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa-moon {color: #f1c40f;background-color: #292929;}
+
+.fa-sun {color: #f39c12;background-color: #292929;}
+
+.fa-moon::before {
+    content: url('./Media/Moon.svg');
+    color-scheme: dark;
+}
+
+.fa-sun::before {
+    content: url('./Media/Sun.svg');
+    color-scheme: light;
+}
+
+.checkbox-label .ball {
+    background-color: #fff;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+    transform: translateX(24px);
 }
