@@ -1,19 +1,35 @@
 :root {
     color-scheme: light dark;
+    --Primary-color: light-dark(#333, #f5f5dc);
+    --Secundary-color: light-dark(#14163a, #6effdb);
+    --Third-color: light-dark(#382310, #ffc17a);
+    --Primary-bg: light-dark(#f5f5dc, #333333);
+    --Secundary-bg: light-dark(#ffc18f, #170041);
+    --Third-bg: light-dark(#4cff91, #0f3157);
     /* background-color: light-dark(beige, black);
     color: light-dark(black, beige); */
 }
 
 @media (prefers-color-scheme: dark) {
-  body { background: #333; color: white; }
+  body { background: #333; color: #f5f5dc; }
 }
 
 @media (prefers-color-scheme: light) {
-  body { background: #ddd; color: black; }
+  body { background: #f5f5dc; color: #333; }
 }
 
 * {
     box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+
+    padding: 0.5rem;
+    width: -webkit-fill-available;
 }
 
 body {
@@ -76,7 +92,7 @@ footer {
 #tabla {
     display: block;
     border: 1px solid currentColor;
-    text-indent: 20px;
+    /* text-indent: 20px; */
     text-overflow: clip;
 
     cursor: default;
@@ -101,20 +117,45 @@ footer {
     margin: 5px;
 }
 
+#tabla thead th {
+    width: 25%;
+    text-align: center;
+    text-wrap: pretty;
+}
+
 #tabla tbody {
     display: flex;
     overflow-y: auto;
     text-overflow: inherit;
     scroll-behavior: smooth;
 
-    width: fit-content;
+    width: -webkit-fill-available;
+}
+
+#tabla tbody tr {
+    width: -webkit-fill-available;
+}
+
+#tabla tbody td {
+    width: 25%;
+    text-align: center;
+    text-wrap: pretty;
 }
 
 #tabla tfoot {
     display: block;
     border-top: 1px solid currentColor;
+}
 
-    width: fit-content;
+#tabla tfoot tr {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.25rem;
+}
+
+#tabla tbody tr td + td {
+    border-left: 1px solid white;
 }
 
 h1 {
@@ -168,4 +209,18 @@ h1 {
 
 .checkbox:checked + .checkbox-label .ball {
     transform: translateX(24px);
+}
+
+@media (width >= 400px) {
+    #tabla {
+        width: 480px;
+    }
+}
+
+@media (max-width: 1250px) {
+    
+}
+
+@media (max-width: 1920px) {
+    
 }
