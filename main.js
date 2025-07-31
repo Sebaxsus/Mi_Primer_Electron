@@ -3,7 +3,7 @@
 // Los Modulos con **PascalCase** son Constructores de Clase Instanciables (E.J BrowserWindow, Tray, Notification)
 // Los Modulos cob **camelCase** son modulos **NO INSTANCIABLES** (E.J app, ipcRender, webContets)
 // [Mas Info](https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app#importing-modules)
-const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron')
+const { app, BrowserWindow, ipcMain, nativeTheme, Notification } = require('electron')
 const path = require('node:path')
 
 // Se puede importar usando los tipos exactos de modulos

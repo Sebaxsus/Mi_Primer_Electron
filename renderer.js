@@ -6,6 +6,12 @@ const checkTheme = async () => {
     await window.darkMode.theme() ? document.getElementById('checkbox').checked = true : document.getElementById('checkbox').checked = false
 }
 
+document.getElementById('notificationBtn').addEventListener('click', async () => {
+    new window.Notification('Notificacion desde Electron', { body: "Hiciste Click en el Boton"}).onclick = () => {
+        console.log('Boton Mensage clickeado!')
+    }
+})
+
 document.getElementById('theme-toggle').addEventListener('click', async () => {
     // No se como funciona pero siempre entra 💀
     // Y lo que menos tiene sentido es que entra cuando `checked` no es true 🤷‍♂️.

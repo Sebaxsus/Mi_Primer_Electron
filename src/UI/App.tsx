@@ -17,7 +17,7 @@ function App() {
             </nav>
         </header>
         <main>
-            <h1>Hello from Electron</h1>
+            <h1>Hello from Electron + React</h1>
             <table id="tabla">
                 <thead>
                     <tr>
