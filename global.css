@@ -292,6 +292,14 @@ footer {
     padding: 0.25rem;
 }
 
+#tabla tfoot tr th {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
 #tabla tbody tr td + td {
     border-left: 1px solid white;
 }

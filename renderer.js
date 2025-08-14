@@ -75,11 +75,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         Facturas,
         Arriendo
     } = {...myData}
+
+    let total = 0
+
     console.log("Datos actuales: ", {...myData}, '\nAhorros: ', Ahorros.keys(), '\nFacturas: ', Facturas, '\nArriendo: ', Arriendo)
 
     Ahorros.map( (row, index) => {
-        document.getElementById('tablaBody').innerHTML += `<tr><td>${row.movimiento}</td><td>${row.fecha}</td><td>${row.monto} ${row.movimiento === "Ingreso" ? "➕" : "➖"}</td><td>${row.usuario}</td></tr>`
+        document.getElementById('tablaBody').innerHTML += `
+            <tr>
+                <td>${row.movimiento}</td>
+                <td>${row.fecha}</td>
+                <td>${row.monto} ${row.movimiento === "Ingreso" ? "➕" : "➖"}</td>
+                <td>${row.usuario}</td>
+            </tr>
+        `
+        total += row.monto
     })
+
+    document.getElementById('tablaTotal').innerText = total
 
 
 })

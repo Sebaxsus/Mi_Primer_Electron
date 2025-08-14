@@ -57,7 +57,7 @@ ipcMain.handle('read-data', async () => {
     try {
         if (fs.existsSync(localFilesPath)) {
             const fileContent = fs.readFileSync(localFilesPath, 'utf-8')
-            console.log("Datos JSON: ", fileContent)
+            // console.log("Datos JSON: ", fileContent)
             return JSON.parse(fileContent)
         }
     } catch (err) {
