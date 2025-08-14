@@ -5,6 +5,8 @@
 // [Mas Info](https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app#importing-modules)
 const { app, BrowserWindow, ipcMain, nativeTheme, Notification } = require('electron')
 const path = require('node:path')
+const fs = require('node:fs')
+const { error } = require('node:console')
 
 // Se puede importar usando los tipos exactos de modulos
 // Para manejar mejor los tipos cuando se usa TypeScript
@@ -41,6 +43,42 @@ ipcMain.handle('toggle-theme', () => {
     }
 
     return nativeTheme.shouldUseDarkColors
+})
+
+// Sistema de Lectura de Archivos .json
+
+// const localFilesPath = path.join(app.getPath("userData"), "database.json")
+
+// Pruebas
+
+const localFilesPath = path.join(__dirname, "LocalFiles.json")
+
+ipcMain.handle('read-data', async () => {
+    try {
+        if (fs.existsSync(localFilesPath)) {
+            const fileContent = fs.readFileSync(localFilesPath, 'utf-8')
+            console.log("Datos JSON: ", fileContent)
+            return JSON.parse(fileContent)
+        }
+    } catch (err) {
+        console.error('Error al leer el archivo Local: ', err)
+    }
+
+    return {
+        Ahorros: [],
+        Facturas: [],
+        Arriendo: {},
+    }
+})
+
+ipcMain.handle('write-data', async (event, data) => {
+    try {
+        fs.writeFileSync(localFilesPath, JSON.stringify(data, null, 2), 'utf-8')
+        return { success: true }
+    } catch (err) {
+        console.error('Error al escribir en el archivo Local: ', err)
+        return { success: false, error: err.message }
+    }
 })
 
 // Como electron usa la arquitectura asyncrona manejada por eventos de

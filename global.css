@@ -262,6 +262,7 @@ footer {
 
 #tabla tbody {
     display: flex;
+    flex-direction: column;
     overflow-y: auto;
     text-overflow: inherit;
     scroll-behavior: smooth;

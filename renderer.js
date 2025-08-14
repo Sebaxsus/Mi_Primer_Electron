@@ -51,4 +51,37 @@ document.getElementById('theme-toggle').addEventListener('change', async () => {
     // }
 })
 
+const loadData = async () => {
+    const data = await window.fsUtils.readData()
+    console.log('Datos Cargados: ', data)
+    return data
+}
+
+const saveData = async (newData) => {
+    const result = await window.fsUtils.writeData(newData)
+
+    if (result.success) {
+        console.log('Datos guardados exitosamente.')
+    } else {
+        console.error('Error al guardar los datos:', result.error)
+    }
+}
+
+// Cargar los datos de el JSON Cuando la Pagina este Lista
+document.addEventListener('DOMContentLoaded', async () => {
+    const myData = await loadData()
+    const {
+        Ahorros,
+        Facturas,
+        Arriendo
+    } = {...myData}
+    console.log("Datos actuales: ", {...myData}, '\nAhorros: ', Ahorros.keys(), '\nFacturas: ', Facturas, '\nArriendo: ', Arriendo)
+
+    Ahorros.map( (row, index) => {
+        document.getElementById('tablaBody').innerHTML += `<tr><td>${row.movimiento}</td><td>${row.fecha}</td><td>${row.monto} ${row.movimiento === "Ingreso" ? "➕" : "➖"}</td><td>${row.usuario}</td></tr>`
+    })
+
+
+})
+
 checkTheme()
