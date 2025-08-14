@@ -16,10 +16,17 @@
     </head>
     <body>
         <header>
+            <nav>
+                <ul>
+                    <li><a href="./index.html">Ahorros</a></li>
+                    <li><a href="./facturas.html">Facturas</a></li>
+                    <li><a href="./arriendo.html">Arriendo</a></li>
+                </ul>
+            </nav>
             <nav class="Themes">
-                <div id="theme-toggle">
-                    <input type="checkbox" class="checkbox" id="checkbox">
-                    <label for="checkbox" class="checkbox-label">
+                <div>
+                    <input type="checkbox" class="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="checkbox-label">
                         <i class="fas fa-moon"></i>
                         <i class="fas fa-sun"></i>
                         <span class="ball"></span>
@@ -27,6 +34,41 @@
                 </div>
             </nav>
         </header>
+        <!-- Modal -->
+        <section id="modal" class="modal hidden">
+            <form id="formulario">
+                <header>
+                    <button class="cerrarModal cerrar">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                    </button>
+                </header>
+                <h2>Nueva Transacción</h2>
+                <label for="formulario">
+                    <h3><strong>*</strong> Movimiento:</h3>
+                    <select name="movimiento" id="tipoMovModal" required>
+                        <option value="ingreso">Ingreso</option>
+                        <option value="Retiro">Retiro</option>
+                    </select>
+                </label>
+                <label for="formulario">
+                    <h3><strong>*</strong> Fecha:</h3>
+                    <input type="datetime-local" name="fecha" id="fechaModal" required>
+                </label>
+                <label for="formulario">
+                    <h3><strong>*</strong> Monto:</h3>
+                    <input type="number" name="monto" id="montoModal" required>
+                </label>
+                <label for="formulario">
+                    <h3><strong>*</strong> Usuario:</h3>
+                    <input type="text" name="usuario" id="usuarioModal" required>
+                </label>
+                <footer>
+                    <button type="submit">Agregar</button>
+                    <button type="button" class="cerrarModal">Cancelar</button>
+                </footer>
+            </form>
+        </section>
         <main>
             <h1>Hello from Electron</h1>
             <table id="tabla">
@@ -49,7 +91,11 @@
                 <tfoot>
                     <tr>
                         <th>Total: 100000</th>
-                        <td>➕ Nueva Transaccion</td>
+                        <td>
+                            <button id="botonModal">
+                                ➕ Nueva Transaccion
+                            </button>
+                        </td>
                     </tr>
                 </tfoot>
             </table>
