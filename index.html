@@ -47,7 +47,7 @@
                 <label for="formulario">
                     <h3><strong>*</strong> Movimiento:</h3>
                     <select name="movimiento" id="tipoMovModal" required>
-                        <option value="ingreso">Ingreso</option>
+                        <option value="Ingreso">Ingreso</option>
                         <option value="Retiro">Retiro</option>
                     </select>
                 </label>
@@ -57,12 +57,18 @@
                 </label>
                 <label for="formulario">
                     <h3><strong>*</strong> Monto:</h3>
-                    <input type="number" name="monto" id="montoModal" required>
+                    <input type="number" name="monto" id="montoModal" step="50000" required>
                 </label>
                 <label for="formulario">
                     <h3><strong>*</strong> Usuario:</h3>
-                    <input type="text" name="usuario" id="usuarioModal" required>
+                    <input type="text" name="usuario" id="usuarioModal" list="usuarios" required>
                 </label>
+                <datalist id="usuarios">
+                    <option value="Mamá"></option>
+                    <option value="Papá"></option>
+                    <option value="JuanJo"></option>
+                    <option value="Sebas"></option>
+                </datalist>
                 <footer>
                     <button type="submit">Agregar</button>
                     <button type="button" class="cerrarModal">Cancelar</button>

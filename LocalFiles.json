@@ -5,6 +5,36 @@
       "fecha": "2025-08-13T12:00:00",
       "monto": 100000,
       "usuario": "Sebastian"
+    },
+    {
+      "movimiento": "Ingreso",
+      "fecha": "2025-08-18T12:28",
+      "monto": 50000,
+      "usuario": "Sebastian"
+    },
+    {
+      "movimiento": "Ingreso",
+      "fecha": "2025-08-18T12:46",
+      "monto": 20000,
+      "usuario": "Sebas"
+    },
+    {
+      "movimiento": "Retiro",
+      "fecha": "2025-08-18T13:14",
+      "monto": 50000,
+      "usuario": "Sebas"
+    },
+    {
+      "movimiento": "Ingreso",
+      "fecha": "2025-08-18T13:25",
+      "monto": 50000,
+      "usuario": "Papá"
+    },
+    {
+      "movimiento": "Ingreso",
+      "fecha": "2025-08-18T13:25",
+      "monto": 50000,
+      "usuario": "Papá"
     }
   ],
   "Facturas": [
@@ -34,11 +64,11 @@
       "recibos": []
     },
     {
-        "tipo": "Luz",
-        "empresa": "Enel",
-        "paginaDePago": "http://pagoluz.com",
-        "fechaDeLlegada": "2025-08-15T00:00:00",
-        "recibos": []
+      "tipo": "Luz",
+      "empresa": "Enel",
+      "paginaDePago": "http://pagoluz.com",
+      "fechaDeLlegada": "2025-08-15T00:00:00",
+      "recibos": []
     }
   ],
   "Arriendo": {

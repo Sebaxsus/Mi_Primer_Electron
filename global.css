@@ -301,7 +301,7 @@ footer {
 }
 
 #tabla tbody tr td + td {
-    border-left: 1px solid white;
+    border-left: 1px solid currentColor;
 }
 
 h1 {

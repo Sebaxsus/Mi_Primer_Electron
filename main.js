@@ -6,7 +6,6 @@
 const { app, BrowserWindow, ipcMain, nativeTheme, Notification } = require('electron')
 const path = require('node:path')
 const fs = require('node:fs')
-const { error } = require('node:console')
 
 // Se puede importar usando los tipos exactos de modulos
 // Para manejar mejor los tipos cuando se usa TypeScript
