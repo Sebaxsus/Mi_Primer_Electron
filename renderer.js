@@ -133,6 +133,8 @@ const saveData = async (newData) => {
 
     if (result.success) {
         console.log('Datos guardados exitosamente.')
+        // Iniciando el intento de Sincronización en segundo plano
+        window.syncUtils.sync(newData)
         // Ocultando el modal
         agregarClaseHidden()
         // Actualizando la Tabla
@@ -160,6 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.getElementById("formulario").addEventListener('submit', async (e) => {
     e.preventDefault() // Previene el comportamiento por defecto de un elemento Form HTML
     const formData = new FormData(e.target)
+    const now = new Date().toISOString()
 
     console.log("Datos crudos de el Formulario: ", formData)
 
@@ -168,6 +171,8 @@ document.getElementById("formulario").addEventListener('submit', async (e) => {
         fecha: formData.get('fecha'),
         monto: Number(formData.get('monto')),
         usuario: formData.get('usuario'),
+        timestamp: now,
+        syncStatus: 'pending',
     }
 
     const myData = await loadData() // Cargo los datos almacenados actualmente

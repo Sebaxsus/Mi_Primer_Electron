@@ -2,39 +2,11 @@
   "Ahorros": [
     {
       "movimiento": "Ingreso",
-      "fecha": "2025-08-13T12:00:00",
-      "monto": 100000,
-      "usuario": "Sebastian"
-    },
-    {
-      "movimiento": "Ingreso",
-      "fecha": "2025-08-18T12:28",
-      "monto": 50000,
-      "usuario": "Sebastian"
-    },
-    {
-      "movimiento": "Ingreso",
-      "fecha": "2025-08-18T12:46",
-      "monto": 20000,
-      "usuario": "Sebas"
-    },
-    {
-      "movimiento": "Retiro",
-      "fecha": "2025-08-18T13:14",
-      "monto": 50000,
-      "usuario": "Sebas"
-    },
-    {
-      "movimiento": "Ingreso",
       "fecha": "2025-08-18T13:25",
       "monto": 50000,
-      "usuario": "Papá"
-    },
-    {
-      "movimiento": "Ingreso",
-      "fecha": "2025-08-18T13:25",
-      "monto": 50000,
-      "usuario": "Papá"
+      "usuario": "Papá",
+      "timestamp": "2025-08-18T14:30:00.000Z",
+      "syncStatus": "pending"
     }
   ],
   "Facturas": [
@@ -47,12 +19,16 @@
         {
           "fechaDeRecibo": "2025-07-15T00:00:00",
           "estado": "Pagado",
-          "comprobante": "base64://string-de-la-imagen"
+          "comprobante": "base64://string-de-la-imagen",
+          "timestamp": "2025-08-18T14:30:00.000Z",
+          "syncStatus": "pending"
         },
         {
           "fechaDeRecibo": "2025-08-15T00:00:00",
           "estado": "Pendiente",
-          "comprobante": null
+          "comprobante": null,
+          "timestamp": "2025-08-18T14:30:00.000Z",
+          "syncStatus": "pending"
         }
       ]
     },
@@ -79,13 +55,18 @@
       {
         "fechaDePago": "2025-08-01T00:00:00",
         "estado": "Pagado",
-        "comprobante": "base64://string-de-la-imagen"
+        "comprobante": "base64://string-de-la-imagen",
+        "timestamp": "2025-08-18T14:30:00.000Z",
+        "syncStatus": "pending"
       },
       {
         "fechaDePago": "2025-09-01T00:00:00",
         "estado": "Pendiente",
-        "comprobante": null
+        "comprobante": null,
+        "timestamp": "2025-08-18T14:30:00.000Z",
+        "syncStatus": "pending"
       }
     ]
-  }
+  },
+  "lastSyncedTimeStamp": "2025-08-18T14:30:00.000Z"
 }

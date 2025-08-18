@@ -6,6 +6,7 @@
 const { app, BrowserWindow, ipcMain, nativeTheme, Notification } = require('electron')
 const path = require('node:path')
 const fs = require('node:fs')
+const { ConexionServer } = require('./sincronizacionIncremental.js') //path.join(__dirname,'sincronizacionIncremental.js')
 
 // Se puede importar usando los tipos exactos de modulos
 // Para manejar mejor los tipos cuando se usa TypeScript
@@ -77,6 +78,26 @@ ipcMain.handle('write-data', async (event, data) => {
     } catch (err) {
         console.error('Error al escribir en el archivo Local: ', err)
         return { success: false, error: err.message }
+    }
+})
+
+ipcMain.handle('sync-data', async (event, localData) => {
+    const result = ConexionServer.syncAhorros(localData)
+
+    if (result instanceof Error) {
+        return {
+            success: false,
+            message: result.message
+        }
+    }
+    
+    if (result.success) {
+        fs.writeFileSync(localFilesPath, JSON.stringify(result.localData, null, 2), 'utf-8')
+
+        return {
+            success: result.success,
+            message: result.message,
+        }
     }
 })
 

@@ -62,3 +62,9 @@ contextBridge.exposeInMainWorld('fsUtils', {
     writeData: (data) => ipcRenderer.invoke('write-data', data),
     formatDate: formatDate,
 })
+
+// API para Manejar la Sincronización con el Servidor
+
+contextBridge.executeInMainWorld('syncUtils', {
+    sync: (data) => ipcRenderer.invoke('sync-data', data),
+})
