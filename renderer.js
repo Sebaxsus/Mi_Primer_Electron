@@ -17,17 +17,6 @@ function noticacion(titulo, cuerpo) {
     }
 }
 
-document.getElementById('notificationBtn').addEventListener('click', async () => {
-    new window.Notification('Notificacion desde Electron', { body: "Hiciste Click en el Boton"}).onclick = () => {
-        console.log('Boton Mensage clickeado!')
-    }
-})
-
-// Logica para cambiar la clase de el Modal de "modal hidden" a "modal"
-document.getElementById("botonModal").addEventListener("click", () => {
-    document.getElementById("modal").classList.remove('hidden')
-})
-
 // Logica para agregarle la clase "hidden" a el modal
 function agregarClaseHidden() {
     const modalElement = document.getElementById("modal").classList
@@ -96,10 +85,6 @@ function actualizarTabla(ahorrosData) {
 
 }
 
-Array.from(document.getElementsByClassName("cerrarModal")).forEach(element => {
-    element.addEventListener('click', agregarClaseHidden)
-});
-
 
 document.getElementById('theme-toggle').addEventListener('change', async () => {
 
@@ -145,43 +130,88 @@ const saveData = async (newData) => {
     }
 }
 
-// Cargar los datos de el JSON Cuando la Pagina este Lista
-document.addEventListener('DOMContentLoaded', async () => {
-    const myData = await loadData()
-    const {
-        Ahorros,
-        Facturas,
-        Arriendo
-    } = {...myData}
+function PaginaAhoros() {
+    document.getElementById('notificationBtn').addEventListener('click', async () => {
+        new window.Notification('Notificacion desde Electron', { body: "Hiciste Click en el Boton"}).onclick = () => {
+            console.log('Boton Mensage clickeado!')
+        }
+    })
 
-    console.log("Datos actuales: ", {...myData}, '\nAhorros: ', Ahorros.keys(), '\nFacturas: ', Facturas, '\nArriendo: ', Arriendo)
+    // Logica para cambiar la clase de el Modal de "modal hidden" a "modal"
+    document.getElementById("botonModal").addEventListener("click", () => {
+        document.getElementById("modal").classList.remove('hidden')
+    })
 
-    actualizarTabla(Ahorros)
-})
+    Array.from(document.getElementsByClassName("cerrarModal")).forEach(element => {
+        element.addEventListener('click', agregarClaseHidden)
+    });
 
-// Event Listener de el Formulario para actualizar los Datos Locales
-document.getElementById("formulario").addEventListener('submit', async (e) => {
-    e.preventDefault() // Previene el comportamiento por defecto de un elemento Form HTML
-    const formData = new FormData(e.target)
-    const now = new Date().toISOString()
+    // Cargar los datos de el JSON Cuando la Pagina este Lista
+    document.addEventListener('DOMContentLoaded', async () => {
+        const myData = await loadData()
+        const {
+            Ahorros,
+            Facturas,
+            Arriendo
+        } = {...myData}
+    
+        console.log("Datos actuales: ", {...myData}, '\nAhorros: ', Ahorros.keys(), '\nFacturas: ', Facturas, '\nArriendo: ', Arriendo)
+    
+        actualizarTabla(Ahorros)
+    })
 
-    console.log("Datos crudos de el Formulario: ", formData)
+    // Event Listener de el Formulario para actualizar los Datos Locales
+    document.getElementById("formulario").addEventListener('submit', async (e) => {
+        e.preventDefault() // Previene el comportamiento por defecto de un elemento Form HTML
+        const formData = new FormData(e.target)
+        const now = new Date().toISOString()
+    
+        console.log("Datos crudos de el Formulario: ", formData)
+    
+        const newTransaction = {
+            movimiento: formData.get('movimiento'),
+            fecha: formData.get('fecha'),
+            monto: Number(formData.get('monto')),
+            usuario: formData.get('usuario'),
+            timestamp: now,
+            syncStatus: 'pending',
+        }
+    
+        const myData = await loadData() // Cargo los datos almacenados actualmente
+    
+        myData.Ahorros.push(newTransaction) // Agrego los Nuevos Datos (Obj) a el Arreglo Ahorros
+    
+        await saveData(myData)
+    
+    }) 
+}
 
-    const newTransaction = {
-        movimiento: formData.get('movimiento'),
-        fecha: formData.get('fecha'),
-        monto: Number(formData.get('monto')),
-        usuario: formData.get('usuario'),
-        timestamp: now,
-        syncStatus: 'pending',
-    }
+function PaginaFacturas() {
 
-    const myData = await loadData() // Cargo los datos almacenados actualmente
+}
 
-    myData.Ahorros.push(newTransaction) // Agrego los Nuevos Datos (Obj) a el Arreglo Ahorros
+function PaginaArriendo() {
 
-    await saveData(myData)
+}
 
-}) 
+// Estas Funciones Toca Moverlas a un Script Dedicado
+// Tambien toca Crear un Cuerpo Vacio en el Index
+// Para poder Cambiar el HTML Dinamicamente para Hacer un SPA
+// En lugar de un Multipage-Application
+switch (document.title) {
+    case 'Mi Primer Electron':
+        PaginaAhoros()
+        break;
+    case 'Facturas':
+        PaginaFacturas()
+        break;
+    case 'Arriendo':
+        PaginaFacturas()
+        break;
+    default:
+        noticacion('Error', "Donde Mierda te metiste!")
+        break;
+}
+
 
 checkTheme()
