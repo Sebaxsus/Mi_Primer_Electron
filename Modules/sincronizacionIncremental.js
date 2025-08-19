@@ -1,7 +1,7 @@
-const axios = require('axios')
+import axios from 'axios'
 
 const BASEURL = 'http://127.0.0.1'
-class ConexionServer {
+export class ConexionServer {
     /**
      * Recibe el objeto de el Archivo Local .json
      * Recibe la ultima fecha de Syncronizacion de el Servidor
@@ -81,7 +81,7 @@ class ConexionServer {
     }
 }
 
-module.exports = {
+export default {
     ConexionServer
 }
 

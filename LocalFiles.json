@@ -7,6 +7,38 @@
       "usuario": "Papá",
       "timestamp": "2025-08-18T14:30:00.000Z",
       "syncStatus": "pending"
+    },
+    {
+      "movimiento": "Ingreso",
+      "fecha": "2025-08-18T16:30",
+      "monto": 50000,
+      "usuario": "Sebas",
+      "timestamp": "2025-08-18T21:30:52.463Z",
+      "syncStatus": "pending"
+    },
+    {
+      "movimiento": "Ingreso",
+      "fecha": "2025-08-18T16:30",
+      "monto": 50000,
+      "usuario": "Sebas",
+      "timestamp": "2025-08-18T21:30:59.960Z",
+      "syncStatus": "pending"
+    },
+    {
+      "movimiento": "Retiro",
+      "fecha": "2025-08-19T14:05",
+      "monto": 50000,
+      "usuario": "Sebas",
+      "timestamp": "2025-08-19T19:06:08.927Z",
+      "syncStatus": "pending"
+    },
+    {
+      "movimiento": "Ingreso",
+      "fecha": "2025-08-19T14:07",
+      "monto": 50000,
+      "usuario": "Sebas",
+      "timestamp": "2025-08-19T19:07:33.795Z",
+      "syncStatus": "pending"
     }
   ],
   "Facturas": [

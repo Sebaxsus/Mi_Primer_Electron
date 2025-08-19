@@ -51,9 +51,9 @@ function actualizarTabla(ahorrosData) {
     // Validando que ahorrosData sea distindo a null y que sea un objeto tipo Array
     if (ahorrosData && Array.isArray(ahorrosData)) {
         
-        ahorrosData.map( (row, index) => {
+        ahorrosData.map( async (row, index) => {
 
-            const formattedDate = window.fsUtils.formatDate(row.fecha)
+            const formattedDate = await window.fsUtils.formatDate(row.fecha)
             /* Que en Intl.NumberFormat:
                 Es un objeto Nativo de JS el cual permite formatear los numeros sensible al Idioma
                 Es decir que permite establecer un Formato dependiendo de como se manejen los Numeros
@@ -133,12 +133,13 @@ const saveData = async (newData) => {
 
     if (result.success) {
         console.log('Datos guardados exitosamente.')
-        // Iniciando el intento de Sincronización en segundo plano
-        window.syncUtils.sync(newData)
         // Ocultando el modal
         agregarClaseHidden()
         // Actualizando la Tabla
         actualizarTabla(newData.Ahorros)
+        // Iniciando el intento de Sincronización en segundo plano
+        const syncResult = await window.syncUtils.sync(newData)
+        console.log(`Resultado de la Syncronización: ${syncResult}`)
     } else {
         console.error('Error al guardar los datos:', result.error)
     }

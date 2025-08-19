@@ -8,6 +8,9 @@
     --Third-bg: light-dark(#4cff91, #0f3157);
     /* background-color: light-dark(beige, black);
     color: light-dark(black, beige); */
+
+    height: 100%;
+    width: 100%;
 }
 
 a {
@@ -39,6 +42,32 @@ a:active {
     box-sizing: border-box;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: auto;
+    margin: 0;
+
+    justify-content: flex-start;
+    align-items: center;
+
+    position: relative;
+}
+
+/* Configuracion de Espacio para el Header
+
+Ya no es necesario ya que el culpable de no calcular 
+el espacio de el Header al tener 'position: sticky;'
+Era el 'justify-content: center',
+*/
+
+/* main {
+    margin-top: 145px;
+} */
+
+
 header {
     display: flex;
     flex-direction: row;
@@ -47,6 +76,12 @@ header {
 
     padding: 0.5rem;
     width: -webkit-fill-available;
+
+    position: sticky;
+    top: 0;
+
+    backdrop-filter: blur(26px) brightness(0.9);
+    border-radius: 0 0 16px 16px;
 }
 
 header ul {
@@ -54,6 +89,7 @@ header ul {
     flex-direction: row;
 
     gap: 1rem;
+    margin: 0;
 }
 
 header ul li {
@@ -70,34 +106,9 @@ header ul li:hover {
     transform: scale(1.1);
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-
-    height: 100%;
-    width: auto;
-
-    justify-content: center;
-    align-items: center;
-}
-
-main {
-    display: grid;
-
-    grid-template-areas: 
-        "Title"
-        "Table"
-        "Resume"
-    ;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 5px;
-}
-
 h1 {
     grid-area: Title;
+    text-align: center;
 }
 
 footer {
@@ -115,18 +126,6 @@ footer {
 
     justify-content: space-around;
 
-}
-
-#resume {
-    grid-area: Resume;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 1rem;
 }
 
 /* Estilos de el Modal */
@@ -221,91 +220,6 @@ footer {
 
 .hidden {
     display: none;
-}
-
-
-/* Estilos de la Tabla */
-
-#tabla {
-    display: block;
-    border: 1px solid currentColor;
-    /* text-indent: 20px; */
-    text-overflow: clip;
-
-    cursor: default;
-
-    width: fit-content;
-
-    grid-area: Table;
-}
-
-#tabla thead {
-    display: flex;
-
-    border-bottom: 1px solid currentColor;
-    top: 0;
-}
-
-#tabla thead tr {
-    display: flex;
-    justify-content: space-between;
-
-    width: -webkit-fill-available;
-    margin: 5px;
-}
-
-#tabla thead th {
-    width: 25%;
-    text-align: center;
-    text-wrap: pretty;
-}
-
-#tabla tbody {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    text-overflow: inherit;
-    scroll-behavior: smooth;
-
-    width: -webkit-fill-available;
-}
-
-#tabla tbody tr {
-    width: -webkit-fill-available;
-}
-
-#tabla tbody td {
-    width: 25%;
-    text-align: center;
-    text-wrap: pretty;
-}
-
-#tabla tfoot {
-    display: block;
-    border-top: 1px solid currentColor;
-}
-
-#tabla tfoot tr {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0.25rem;
-}
-
-#tabla tfoot tr th {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-}
-
-#tabla tbody tr td + td {
-    border-left: 1px solid currentColor;
-}
-
-h1 {
-    text-align: center;
 }
 
 /* UI de CodePen */

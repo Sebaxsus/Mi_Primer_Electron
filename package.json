@@ -2,7 +2,8 @@
   "name": "mi_primer_electron",
   "version": "1.0.0",
   "description": "Mi primera aplicación usando Electron.js",
-  "main": "main.js",
+  "main": "main.mjs",
+  "type": "module",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",

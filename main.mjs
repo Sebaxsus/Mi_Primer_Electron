@@ -3,15 +3,20 @@
 // Los Modulos con **PascalCase** son Constructores de Clase Instanciables (E.J BrowserWindow, Tray, Notification)
 // Los Modulos cob **camelCase** son modulos **NO INSTANCIABLES** (E.J app, ipcRender, webContets)
 // [Mas Info](https://www.electronjs.org/docs/latest/tutorial/tutorial-first-app#importing-modules)
-const { app, BrowserWindow, ipcMain, nativeTheme, Notification } = require('electron')
-const path = require('node:path')
-const fs = require('node:fs')
-const { ConexionServer } = require('./sincronizacionIncremental.js') //path.join(__dirname,'sincronizacionIncremental.js')
+import { app, BrowserWindow, ipcMain, nativeTheme, Notification } from 'electron'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import fs from 'node:fs'
+import { ConexionServer } from './Modules/sincronizacionIncremental.js'//path.join(__dirname, "Modules", "sincronizacionIncremental.js")
+import { formatDate } from './Modules/utils.js'
 
 // Se puede importar usando los tipos exactos de modulos
 // Para manejar mejor los tipos cuando se usa TypeScript
 // Usando su alias (Ej require('electron/main') )
 // [Mas Info](https://www.electronjs.org/docs/latest/tutorial/process-model#process-specific-module-aliases-typescript)
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const createWindow = () => {
     
@@ -19,13 +24,17 @@ const createWindow = () => {
         with: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: join(__dirname, 'preload.js')
         }
     })
 
     window.loadFile("index.html")
 
 }
+
+ipcMain.handle('format-date', (event, date) => {
+    return formatDate(date)
+})
 
 ipcMain.handle('current-theme', () => {
     // Si es dark devuelve True
@@ -47,11 +56,10 @@ ipcMain.handle('toggle-theme', () => {
 
 // Sistema de Lectura de Archivos .json
 
-// const localFilesPath = path.join(app.getPath("userData"), "database.json")
+// const localFilesPath = join(app.getPath("userData"), "database.json")
 
 // Pruebas
-
-const localFilesPath = path.join(__dirname, "LocalFiles.json")
+const localFilesPath = join(__dirname, "LocalFiles.json")
 
 ipcMain.handle('read-data', async () => {
     try {

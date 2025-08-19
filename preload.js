@@ -22,23 +22,23 @@ const { contextBridge, ipcRenderer } = require('electron')
  * @param {string} dateString La fecha en formato ISO 8601 "2025-05-24T12:00"
  * @returns {string} La fecha formateada "24-07-2025 12:00:00"
  */
-function formatDate(dateString) {
-    if (!dateString) {
-        return ""
-    }
+// function formatDate(dateString) {
+//     if (!dateString) {
+//         return ""
+//     }
 
-    const date = new Date(dateString)
+//     const date = new Date(dateString)
 
-    const day = String(date.getDate()).padStart(2, '0')
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const year = date.getFullYear()
+//     const day = String(date.getDate()).padStart(2, '0')
+//     const month = String(date.getMonth() + 1).padStart(2, '0')
+//     const year = date.getFullYear()
 
-    const hours = String(date.getHours()).padStart(2, '0')
-    const minutes = String(date.getMinutes()).padStart(2, '0')
-    const seconds = String(date.getSeconds()).padStart(2, '0')
+//     const hours = String(date.getHours()).padStart(2, '0')
+//     const minutes = String(date.getMinutes()).padStart(2, '0')
+//     const seconds = String(date.getSeconds()).padStart(2, '0')
 
-    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
-}
+//     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
+// }
 
 // API de Electron para Exponer las Versiones de Node, Chrome y Electron JS
 
@@ -60,11 +60,11 @@ contextBridge.exposeInMainWorld('darkMode', {
 contextBridge.exposeInMainWorld('fsUtils', {
     readData: () => ipcRenderer.invoke('read-data'),
     writeData: (data) => ipcRenderer.invoke('write-data', data),
-    formatDate: formatDate,
+    formatDate: (date) => ipcRenderer.invoke('format-date', date),
 })
 
 // API para Manejar la Sincronización con el Servidor
 
-contextBridge.executeInMainWorld('syncUtils', {
+contextBridge.exposeInMainWorld('syncUtils', {
     sync: (data) => ipcRenderer.invoke('sync-data', data),
 })

@@ -4,7 +4,7 @@
  * @param {string} dateString La fecha en formato ISO 8601 "2025-05-24T12:00"
  * @returns {string} La fecha formateada "24-07-2025 12:00:00"
  */
-function formatDate(dateString) {
+export function formatDate(dateString) {
     if (!dateString) {
         return ""
     }
@@ -22,6 +22,6 @@ function formatDate(dateString) {
     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`
 }
 
-module.exports = { 
+export default { 
     formatDate: formatDate,
 }
