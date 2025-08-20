@@ -129,6 +129,40 @@ const saveData = async (newData) => {
         console.error('Error al guardar los datos:', result.error)
     }
 }
+/**
+ * Filtra el arreglo de recibos y devuelve el recibo de este mes
+ * en caso de no encontrar uno de el mes actual devolvera null
+ * @param {Array} recibos 
+ * @returns {object || null}
+ */
+const lastReciept = (recibos) => {
+    const recibo = recibos.filter(
+        recibo => new Date(recibo.fechaDeRecibo).getMonth() === new Date().getMonth()
+    )
+
+    if (recibo.length === 0) {
+        console.log('No hay recibos de este mes')
+        return null
+    }
+    return recibo[0]
+}
+
+const loadReciept = async (empresa, datosRecibo) => {
+    return `
+            <div>
+                <h4>Estado</h4>
+                <span>${datosRecibo.estado}</span>
+                <h4>Fecha de el Recibo</h4>
+                <span>${await window.fsUtils.formatDate(datosRecibo.fechaDeRecibo)}</span>
+            </div>
+            <figure>
+                <img src=${datosRecibo.comprobante ? datosRecibo.comprobante : '../../Media/Recibo.svg'} alt='Imagen Comprobante de Pagao Factura ${empresa} Fecha: ${datosRecibo.fechaDeRecibo}' role='img'></img>
+                <figcaption>
+                    ${datosRecibo.comprobante ? `Comprobante de Pago Factura ${empresa} fecha: ` : `Falta Comprobante de Pago de la Factura ${empresa}!`}
+                </figcaption>
+            </figure>
+        `
+}
 
 function PaginaAhoros() {
     document.getElementById('notificationBtn').addEventListener('click', async () => {
@@ -187,7 +221,23 @@ function PaginaAhoros() {
 }
 
 function PaginaFacturas() {
+    document.addEventListener('DOMContentLoaded', async () => {
+        const { Facturas } = await loadData()
 
+        console.log('Datos Facturas Cargados: ', Facturas)
+        // Aqui debo Buscar la Factura de el mes actual Es decir 08
+        // Las Facturas tendran 3 estados 'No ha llegado', 'Pendiente', 'Pago'
+        Facturas.map( async (DatosFactura, index) => {
+            
+            console.log('Datos factura: ', DatosFactura)
+
+            const reciboActual = await lastReciept(DatosFactura.recibos)
+
+            document.getElementById(DatosFactura.tipo).innerHTML += await loadReciept(DatosFactura.empresa, reciboActual)
+        })
+
+
+    } )
 }
 
 function PaginaArriendo() {

@@ -1,29 +1,72 @@
 main {
     display: grid;
 
+    width: 100%;
+    height: auto;
+
     grid-template-areas: 
-        "titulo titulo titulo"
-        "Gas Luz Agua"
-        "* Internet *"
+        "Title Title"
+        "Gas Luz"
+        "Agua Internet"
     ;
 
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+
+    padding: 2px;
 
     gap: 5px;
 }
 
-section {
-    background-color: var(--Primary-bg);
+article {
+    background-color: var(--Secundary-bg);
 
     border-radius: 2rem;
 
-    width: 100%;
+    width: 375px;
     max-height: 200px;
 
     display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
 
     overflow-y: auto;
+}
+
+article section {
+    display: flex;
+
+    gap: 0.25rem;
+
+    align-items: center;
+    
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+    }
+    span {
+        color: var(--Secundary-color);
+    }
+}
+
+h4 {
+    text-align: center;
+    color: var(--Third-color);
+}
+
+figure {
+    text-align: center;
+    color: currentColor;
+    text-wrap: pretty;
+    margin: 0;
+    padding: 2px;
 }
 
 .Gas {

@@ -4,13 +4,19 @@
     --Secundary-color: light-dark(#14163a, #6effdb);
     --Third-color: light-dark(#382310, #ffc17a);
     --Primary-bg: light-dark(#f5f5dc, #333333);
-    --Secundary-bg: light-dark(#ffc18f, #170041);
+    --Secundary-bg: light-dark(#ffc18f, #0c0021);
     --Third-bg: light-dark(#4cff91, #0f3157);
     /* background-color: light-dark(beige, black);
     color: light-dark(black, beige); */
 
     height: 100%;
     width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -38,9 +44,6 @@ a:active {
   body { background: #f5f5dc; color: #333; }
 }
 
-* {
-    box-sizing: border-box;
-}
 
 body {
     display: flex;
@@ -48,7 +51,6 @@ body {
 
     height: 100%;
     width: auto;
-    margin: 0;
 
     justify-content: flex-start;
     align-items: center;
@@ -72,7 +74,7 @@ header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 
     padding: 0.5rem;
     width: -webkit-fill-available;
@@ -89,7 +91,7 @@ header ul {
     flex-direction: row;
 
     gap: 1rem;
-    margin: 0;
+    padding-inline: 4px;
 }
 
 header ul li {
@@ -179,6 +181,9 @@ footer {
     justify-content: center;
 
     padding: 0rem;
+    /* Para evitar que el estilo de el Header Nav lo afecte */
+    top: auto;
+    backdrop-filter: none;
 }
 
 .modal footer {
@@ -220,6 +225,10 @@ footer {
 
 .hidden {
     display: none;
+}
+
+.Themes {
+    padding-right: 0.25rem;
 }
 
 /* UI de CodePen */

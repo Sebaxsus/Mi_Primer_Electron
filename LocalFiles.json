@@ -69,14 +69,45 @@
       "empresa": "Empresa Agua",
       "paginaDePago": "http://pagoagua.com",
       "fechaDeLlegada": "2025-08-20T00:00:00",
-      "recibos": []
+      "recibos": [
+        {
+          "fechaDeRecibo": "2025-08-15T00:00:00",
+          "estado": "No ha llegado",
+          "comprobante": null,
+          "timestamp": "2025-08-18T14:30:00.000Z",
+          "syncStatus": "pending"
+        }
+      ]
     },
     {
       "tipo": "Luz",
       "empresa": "Enel",
       "paginaDePago": "http://pagoluz.com",
       "fechaDeLlegada": "2025-08-15T00:00:00",
-      "recibos": []
+      "recibos": [
+        {
+          "fechaDeRecibo": "2025-08-15T00:00:00",
+          "estado": "Pendiente",
+          "comprobante": null,
+          "timestamp": "2025-08-18T14:30:00.000Z",
+          "syncStatus": "pending"
+        }
+      ]
+    },
+    {
+      "tipo": "Internet",
+      "empresa": "Claro",
+      "paginaDePago": "http://pagoclaro.com",
+      "fechaDeLlegada": "2025-08-15T00:00:00",
+      "recibos": [
+        {
+          "fechaDeRecibo": "2025-08-15T00:00:00",
+          "estado": "Pendiente",
+          "comprobante": null,
+          "timestamp": "2025-08-18T14:30:00.000Z",
+          "syncStatus": "pending"
+        }
+      ]
     }
   ],
   "Arriendo": {
