@@ -29,7 +29,7 @@ function agregarClaseHidden() {
 
 // Logica para agregar los datos de el JSON a la Tabla
 
-function actualizarTabla(ahorrosData) {
+async function actualizarTabla(ahorrosData) {
 
     const tablaBody = document.getElementById('tablaBody')
     let total = 0
@@ -40,47 +40,56 @@ function actualizarTabla(ahorrosData) {
     // Validando que ahorrosData sea distindo a null y que sea un objeto tipo Array
     if (ahorrosData && Array.isArray(ahorrosData)) {
         
-        ahorrosData.map( async (row, index) => {
+        // Con Promise.all(promisesArray) me aseguo que se resuelva el arreglo de promesas de el map
+        await Promise.all(
+            ahorrosData.map( async (row, index) => {
 
-            const formattedDate = await window.fsUtils.formatDate(row.fecha)
-            /* Que en Intl.NumberFormat:
-                Es un objeto Nativo de JS el cual permite formatear los numeros sensible al Idioma
-                Es decir que permite establecer un Formato dependiendo de como se manejen los Numeros
-                en Dicho idioma.
+                const formattedDate = await window.fsUtils.formatDate(row.fecha)
+                /* Que en Intl.NumberFormat:
+                    Es un objeto Nativo de JS el cual permite formatear los numeros sensible al Idioma
+                    Es decir que permite establecer un Formato dependiendo de como se manejen los Numeros
+                    en Dicho idioma.
 
-                Ademas Permite Establecer si: 
-                    el Numero es una Moneda (style),
-                    Que tipo de Moneda (currency) usando los Codigos de Moneda **ISO 4217**,
-                    Como mostrar el Tipo de Moneda (currencyDisplay) code, symbol, narrowSymbol, name,
-                    fraccionMinima de Digitos (decimales 1,000.00),
-                    fraccionMaxima de Digitos (ecimales 1,000.0000)
+                    Ademas Permite Establecer si: 
+                        el Numero es una Moneda (style),
+                        Que tipo de Moneda (currency) usando los Codigos de Moneda **ISO 4217**,
+                        Como mostrar el Tipo de Moneda (currencyDisplay) code, symbol, narrowSymbol, name,
+                        fraccionMinima de Digitos (decimales 1,000.00),
+                        fraccionMaxima de Digitos (ecimales 1,000.0000)
 
-                [Mas Info](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
-                [Locale Options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#locale_options)
-                [Style Formats](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#style_options)
-                [Currency Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#currency)
-            */
+                    [Mas Info](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+                    [Locale Options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#locale_options)
+                    [Style Formats](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#style_options)
+                    [Currency Format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#currency)
+                */
 
-            if (row.movimiento.toLowerCase() === "ingreso") {
-                montoIcon = "➕"
-                total += row.monto
-            } else {
-                montoIcon = "➖"
-                total -= row.monto
-            }
-            
-            tablaBody.innerHTML += `
-                <tr>
-                    <td>${row.movimiento}</td>
-                    <td>${formattedDate}</td>
-                    <td>${Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', currencyDisplay: 'code', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(row.monto)} ${montoIcon}</td>
-                    <td>${row.usuario}</td>
-                </tr>
-            `
-            
-        })
+                if (row.movimiento.toLowerCase() === "ingreso") {
+                    montoIcon = "➕"
+                    total += row.monto
+                } else {
+                    montoIcon = "➖"
+                    total -= row.monto
+                }
+                
+                tablaBody.innerHTML += `
+                    <tr>
+                        <td>${row.movimiento}</td>
+                        <td>${formattedDate}</td>
+                        <td>${Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', currencyDisplay: 'code', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(row.monto)} ${montoIcon}</td>
+                        <td>${row.usuario}</td>
+                    </tr>
+                `
+                
+            })
+        )
         
-        document.getElementById('tablaTotal').innerText = Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', currencyDisplay: 'code', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(total)
+        document.getElementById('tablaTotal').innerText = Intl.NumberFormat('es-CO', { 
+            style: 'currency',
+            currency: 'COP',
+            currencyDisplay: 'code',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0 
+        }).format(total)
     }
 
 }
@@ -89,7 +98,7 @@ function actualizarTabla(ahorrosData) {
 document.getElementById('theme-toggle').addEventListener('change', async () => {
 
     const isDarkMode = await window.darkMode.toggle()
-    console.log('Se cambio el tema a ', isDarkMode ? 'Dark' : 'Light')
+    // console.log('Se cambio el tema a ', isDarkMode ? 'Dark' : 'Light')
 
     // isDarkMode ? document.getElementById('theme-toggle').checked = true : document.getElementById('theme-toggle').checked = false
 
@@ -121,7 +130,7 @@ const saveData = async (newData) => {
         // Ocultando el modal
         agregarClaseHidden()
         // Actualizando la Tabla
-        actualizarTabla(newData.Ahorros)
+        await actualizarTabla(newData.Ahorros)
         // Iniciando el intento de Sincronización en segundo plano
         const syncResult = await window.syncUtils.sync(newData)
         console.log(`Resultado de la Syncronización: ${syncResult}`)
@@ -129,13 +138,15 @@ const saveData = async (newData) => {
         console.error('Error al guardar los datos:', result.error)
     }
 }
+
 /**
- * Filtra el arreglo de recibos y devuelve el recibo de este mes
- * en caso de no encontrar uno de el mes actual devolvera null
+ * Filtra el arreglo de recibos para obtener el recibo de el mes actual
+ * luego asigna los datos en un marcado HTML
+ * @param {string} empresa 
  * @param {Array} recibos 
- * @returns {object || null}
+ * @returns {String} String Concatenado con Elementos HTML
  */
-const lastReciept = (recibos) => {
+const loadReciept = async (empresa, recibos) => {
     const recibo = recibos.filter(
         recibo => new Date(recibo.fechaDeRecibo).getMonth() === new Date().getMonth()
     )
@@ -144,21 +155,18 @@ const lastReciept = (recibos) => {
         console.log('No hay recibos de este mes')
         return null
     }
-    return recibo[0]
-}
 
-const loadReciept = async (empresa, datosRecibo) => {
     return `
             <div>
                 <h4>Estado</h4>
-                <span>${datosRecibo.estado}</span>
+                <span class='${recibo[0].estado === "No ha llegado" ? 'porLlegar' : recibo[0].estado}'>${recibo[0].estado}</span>
                 <h4>Fecha de el Recibo</h4>
-                <span>${await window.fsUtils.formatDate(datosRecibo.fechaDeRecibo)}</span>
+                <span>${await window.fsUtils.formatDate(recibo[0].fechaDeRecibo)}</span>
             </div>
             <figure>
-                <img src=${datosRecibo.comprobante ? datosRecibo.comprobante : '../../Media/Recibo.svg'} alt='Imagen Comprobante de Pagao Factura ${empresa} Fecha: ${datosRecibo.fechaDeRecibo}' role='img'></img>
+                <img src=${recibo[0].comprobante ? recibo[0].comprobante : '../../Media/Recibo.svg'} alt='Imagen Comprobante de Pagao Factura ${empresa} Fecha: ${recibo[0].fechaDeRecibo}' role='img'></img>
                 <figcaption>
-                    ${datosRecibo.comprobante ? `Comprobante de Pago Factura ${empresa} fecha: ` : `Falta Comprobante de Pago de la Factura ${empresa}!`}
+                    ${recibo[0].comprobante ? `Comprobante de Pago Factura ${empresa}` : `Falta Comprobante de Pago de la Factura ${empresa}!`}
                 </figcaption>
             </figure>
         `
@@ -191,7 +199,7 @@ function PaginaAhoros() {
     
         console.log("Datos actuales: ", {...myData}, '\nAhorros: ', Ahorros.keys(), '\nFacturas: ', Facturas, '\nArriendo: ', Arriendo)
     
-        actualizarTabla(Ahorros)
+        await actualizarTabla(Ahorros)
     })
 
     // Event Listener de el Formulario para actualizar los Datos Locales
@@ -227,13 +235,21 @@ function PaginaFacturas() {
         console.log('Datos Facturas Cargados: ', Facturas)
         // Aqui debo Buscar la Factura de el mes actual Es decir 08
         // Las Facturas tendran 3 estados 'No ha llegado', 'Pendiente', 'Pago'
-        Facturas.map( async (DatosFactura, index) => {
+        Facturas.map( async (Factura, index) => {
             
-            console.log('Datos factura: ', DatosFactura)
+            console.log('Datos factura: ', Factura)
+            // Cuerpo de el Articulo
+            document.getElementById(Factura.tipo).innerHTML += await loadReciept(Factura.empresa, Factura.recibos)
+            // Footer de el Articulo
+            document.getElementById(`${Factura.tipo}Foot`).innerHTML = `
+                <a href="${Factura.paginaDePago}" referrerpolicy="noreferrer">
+                    <button title='Ir a la Pagina de Pagos ${Factura.paginaDePago}'>Pagar</button>
+                </a>
+                <button id='${Factura.tipo}btn' title='Guardar la imagen de un Comprobante de Pago'>
+                    Agregar Comprobante
+                </button>
+            `
 
-            const reciboActual = await lastReciept(DatosFactura.recibos)
-
-            document.getElementById(DatosFactura.tipo).innerHTML += await loadReciept(DatosFactura.empresa, reciboActual)
         })
 
 

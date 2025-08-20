@@ -33,6 +33,14 @@ article {
     align-items: center;
 
     overflow-y: auto;
+
+    transition: 300ms cubic-bezier(0.075, 0.82, 0.165, 1) all;
+
+    cursor: pointer;
+}
+
+article:hover {
+    transform: scale(1.05);
 }
 
 article section {
@@ -42,8 +50,8 @@ article section {
 
     align-items: center;
     
-    margin-bottom: 0.5rem;
-    padding: 0.25rem;
+    margin-bottom: 0.4rem;
+    padding: 0.5rem;
 
     div {
         display: flex;
@@ -54,6 +62,17 @@ article section {
     span {
         color: var(--Secundary-color);
     }
+}
+
+article footer {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+    align-items: center;
+
+    gap: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
 h4 {
@@ -67,6 +86,9 @@ figure {
     text-wrap: pretty;
     margin: 0;
     padding: 2px;
+
+    /* border-radius: 1rem;
+    border: solid 1px currentColor; */
 }
 
 .Gas {
@@ -83,4 +105,16 @@ figure {
 
 .Internet {
     grid-area: Internet;
+}
+
+.Pendiente {
+    color: light-dark(white, red);
+}
+
+.porLlegar {
+    color: light-dark(orange, orange)
+}
+
+.Pagado {
+    color: light-dark(green, green)
 }
