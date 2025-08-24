@@ -18,6 +18,69 @@ import { formatDate } from './Modules/utils.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+// const localFilesPath = join(app.getPath("userData"), "database.json")
+
+// Pruebas
+const localFilesPath = join(__dirname, "LocalFiles.json")
+
+const generateNewBills = () => {
+    try {
+        if (!fs.existsSync(localFilesPath)) {
+            return
+        }
+
+        const fileContent = fs.readFileSync(localFilesPath, 'utf-8')
+        const data = JSON.parse(fileContent)
+
+        const today = new Date()
+        const currentMonth = today.getMonth()
+        const currentYear = today.getFullYear()
+
+        data.Facturas.forEach(factura => {
+            // Validando si ya existe un recibo para el mes y año actual
+            const billExistForThisMonth = factura.recibos.some(recibo => {
+                const reciboDate = new Date(recibo.fechaDeRecibo)
+                return reciboDate.getMonth() === currentMonth && reciboDate.getFullYear() === currentYear
+            })
+
+            if (!billExistForThisMonth) {
+                // Creando un nuevo objeto de recibo. Estableciendo la fecha de llegada a el 15
+                const newRecibo = {
+                    fechaDeRecibo: `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-15T00:00:00`,
+                    estado: "Por Llegar",
+                    comprobante: null,
+                    timestamp: today.toISOString(),
+                    syncStatus: "pending"
+                }
+                factura.recibos.push(newRecibo)
+                console.log(`Recibo para ${factura.tipo} generado para ${currentMonth + 1}/${currentYear}.`)
+            }
+        })
+
+        // Validando el Arriendo también
+        const arriendo = data.Arriendo
+        const lastPaymentDate = arriendo.pagos.length > 0 ? new Date(arriendo.pagos[arriendo.pagos.length - 1].fechaDePago) : new Date(arriendo.fechaDePago)
+
+        if (lastPaymentDate.getMonth() !== currentMonth || lastPaymentDate.getFullYear() !== currentYear) {
+
+            const newArriendoPago = {
+                fechaDePago: `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-04T:00:00:00`,
+                estado: "Pendiente",
+                comprobante: null,
+                timestamp: today.toISOString(),
+                syncStatus: "pending"
+            }
+            arriendo.pagos.push(newArriendoPago)
+            console.log(`Pago de arriendo generado para ${currentMonth + 1}/${currentYear}.`);
+        }
+
+        // Guardando los datos actualizados
+        fs.writeFileSync(localFilesPath, JSON.stringify(data, null, 2), 'utf-8')
+    } catch (e) {
+        console.error("Error al generar nuevos Recibos: ", e)
+    }
+}
+
 const createWindow = () => {
     
     const window = new BrowserWindow({
@@ -56,10 +119,7 @@ ipcMain.handle('toggle-theme', () => {
 
 // Sistema de Lectura de Archivos .json
 
-// const localFilesPath = join(app.getPath("userData"), "database.json")
 
-// Pruebas
-const localFilesPath = join(__dirname, "LocalFiles.json")
 
 ipcMain.handle('read-data', async () => {
     try {
@@ -115,6 +175,7 @@ ipcMain.handle('sync-data', async (event, localData) => {
 app.whenReady().then(() => {
 
     createWindow()
+    generateNewBills()
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
